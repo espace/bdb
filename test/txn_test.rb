@@ -26,7 +26,7 @@ class TxnTest < Test::Unit::TestCase
     txn = @env.txn_begin(nil, 0)
     @db.put(txn, 'key', 'value', 0)
     txn.commit(0)
-    assert_equal 'value', @db.get(nil, 'key', nil, 0)
+    assert_equal 'value', @db.get(nil, 'key', nil, 0)[1]
   end
 
   def test_abort
@@ -41,7 +41,7 @@ class TxnTest < Test::Unit::TestCase
     @db.put(txn, 'key', 'value', 0)
     assert txn.tid
     txn.commit(0)
-    assert_equal 'value', @db.get(nil, 'key', nil, 0)
+    assert_equal 'value', @db.get(nil, 'key', nil, 0)[1]
   end
 
   def test_timeout
@@ -49,7 +49,7 @@ class TxnTest < Test::Unit::TestCase
     txn.set_timeout(10, Bdb::DB_SET_TXN_TIMEOUT)
     @db.put(txn, 'key', 'value', 0)
     txn.commit(0)
-    assert_equal 'value', @db.get(nil, 'key', nil, 0)
+    assert_equal 'value', @db.get(nil, 'key', nil, 0)[1]
   end
 
   def test_stat
@@ -59,7 +59,7 @@ class TxnTest < Test::Unit::TestCase
     txn_stat = @env.txn_stat(0)
     assert txn_stat
     assert txn_stat['st_ncommits'] > 0
-    assert_equal 'value', @db.get(nil, 'key', nil, 0)    
+    assert_equal 'value', @db.get(nil, 'key', nil, 0)[1]    
   end
 
   def test_stat_active
@@ -68,7 +68,7 @@ class TxnTest < Test::Unit::TestCase
     txn_stat = @env.txn_stat(0)
     txn.commit(0)
     assert_equal 1, txn_stat['st_txnarray'].length
-    assert_equal 'value', @db.get(nil, 'key', nil, 0)    
+    assert_equal 'value', @db.get(nil, 'key', nil, 0)[1]    
   end
 
 end

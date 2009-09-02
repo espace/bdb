@@ -1,13 +1,13 @@
 h1. Bdb
 
-Ruby bindings for Berkeley DB versions 4.2-4.7.
+Ruby 1.9 bindings for Berkeley DB versions 4.2-4.7.
 
 h2. Download
 
 Currently this library is available via git at:
 
 <pre>
-   git://github.com/mattbauer/bdb.git
+   git://github.com/espace/bdb.git
 </pre>
 
 h2. Installation
@@ -17,7 +17,7 @@ h3. From Git
 You can check out the latest source from git:
 
 <pre>
-   git clone git://github.com/mattbauer/bdb.git
+   git clone git://github.com/espace/bdb.git
 </pre>
 
 h3. As a Gem
@@ -26,19 +26,72 @@ At the moment this library is not available on Rubyforge.  To install it as a
 gem, do the following (for custom compiled version 4.7):
 
 <pre>
-   sudo env ARCHFLAGS="-arch i386" gem install mattbauer-bdb --source http://gems.github.com -- --with-db-dir=/usr/local/BerkeleyDB.4.7
+   gem install espace-bdb --source http://gems.github.com
 </pre>
 
-For Berkeley DB v4.6 installed from MacPorts do the following:
+This will wokrs on ubuntu.
 
-<pre>
-   sudo env ARCHFLAGS="-arch i386" gem install mattbauer-bdb --source http://gems.github.com -- --with-db-include=/opt/local/include/db46 --with-db-lib=/opt/local/lib/db46
-</pre>
-
-This assumes you're on OS X and BerkeleyDB wasn't compiled as a universal binary.
 
 h2. Sample Usage
 
+The New Way..
+<pre>
+  require 'berkeleydb'
+
+  # creating an environment
+  @env = BDB::Env.new('environment_path',flags)
+
+  # create btree DB
+  
+    #if file_name is nil, then the table will be created in memory,
+    #if table_name is nil and file_name exists, the table name will be the same as file_name
+    #marshal: if you are sending a ruby object to be stored, turn this to true, it will loaded as an object when you request it.
+
+    @btree = @env.btree(file_name,table_name,marshal=false)   
+   
+    # Inserting a record
+    @btree.put(key,data,transaction=nil,flags=0)
+
+   # Reading a record 
+    # Returns an array containing the key and the value 
+    key,value = @btree.get(key)
+    
+   # Using as a queue
+     @btree.push(data)  #Inserts the record with the current time stamp
+     @btree.pop   #Returns the record with the smallest key
+
+  
+  # create Hash Table DB
+    # Parameters are the same as Brtee
+
+    @hash = @env.hash(file_name=nil,table_name=nil,marshal=false)
+ 
+    # Inserting a record
+    @hash.put(key,data,transaction=nil,flags=0)  
+    
+    # Reading a record 
+    # Returns an array containing the key and the value 
+    key,value = @hash.get(key)         
+
+    #Add Btree Index
+    @hash.add_btree_index
+
+    #Find in Index
+    @hash.find_in_index(data)
+    
+  # create Queue DB
+    
+     @queue = @env.queue(record_length,file_name,marshal=false)
+
+     # Push A record
+     @queue.push(data)
+
+    # Pop A record
+     @queue.pop(data)
+</pre>
+
+
+The Old Way
 <pre>
   env = Bdb::Env.new(0)
   env_flags =  Bdb::DB_CREATE |    # Create the environment if it does not already exist.
@@ -71,6 +124,16 @@ All function arguments systematically omit the leading DB handles and TXN handle
  flag values are used - cursor.close is one.
 
 h2. Notes
+
+h3. New features Added
+
+<ul>
+<li>Adding compatability to Ruby 1.9.1</li>
+<li>Getting The Queue DB fixed and working</li>
+<li>Supporting working with BDB memory only environments</li>
+<li>Adding a nice and neat easy Ruby wrapper to maintain DB objects and access, these wrappers don't have all the features like the old code, but it covers the common cases, However, the old code still works.</li> 
+<li>Some other small bug fixes</li>
+</ul>
 
 The defines generator is imperfect and includes some defines that are not
 flags. While it could be improved, it is easier to delete the incorrect ones.

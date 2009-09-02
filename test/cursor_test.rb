@@ -45,14 +45,14 @@ class CursorTest < Test::Unit::TestCase
   def test_put
     @cursor.put('10_000', 'data-10_000', Bdb::DB_KEYLAST)
     value = @db.get(nil, '10_000', nil, 0)
-    assert_equal 'data-10_000', value
+    assert_equal 'data-10_000', value[1]
   end
   
   def test_del
     key, value = @cursor.get(nil, nil, Bdb::DB_FIRST) 
     value = @db.get(nil, '0', nil, 0)
     assert_equal '0', key
-    assert_equal 'data-0', value
+    assert_equal 'data-0', value[1]
     @cursor.del
     value = @db.get(nil, '0', nil, 0)
     assert_nil value

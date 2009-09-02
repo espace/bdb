@@ -16,13 +16,13 @@ class DbTest < Test::Unit::TestCase
   def test_put_and_get
     @db.put(nil, 'key', 'data', 0)
     result = @db.get(nil, 'key', nil, 0)
-    assert_equal 'data', result
+    assert_equal 'data', result[1]
   end
   
   def test_del
     @db.put(nil, 'key', 'data', 0)
     result = @db.get(nil, 'key', nil, 0)
-    assert_equal 'data', result
+    assert_equal 'data', result[1]
     @db.del(nil, 'key', 0)    
     result = @db.get(nil, 'key', nil, 0)
     assert_nil result
@@ -45,9 +45,9 @@ class DbTest < Test::Unit::TestCase
     @db.put(nil, '5678-1234', 'atad', 0)
     
     result = @db.get(nil, '1234-5678', nil, 0)
-    assert_equal 'data', result
+    assert_equal 'data', result[1]
     result = @db1.get(nil, '5678', nil, 0)
-    assert_equal 'atad', result
+    assert_equal 'atad', result[1]
     
     result = @db1.pget(nil, '1234', nil, 0)
     assert_equal ['1234-5678', 'data'], result
@@ -58,12 +58,12 @@ class DbTest < Test::Unit::TestCase
   def test_aset_and_aget
     @db['key'] = 'data'
     result = @db.get(nil, 'key', nil, 0)
-    assert_equal 'data', result
+    assert_equal 'data', result[1]
     result = @db['key']
-    assert_equal 'data', result
+    assert_equal 'data', result[1]
     @db['key'] = 'data1'
     result = @db['key']
-    assert_equal 'data1', result
+    assert_equal 'data1', result[1]
   end
   
   def test_get_byteswapped
@@ -120,7 +120,7 @@ class DbTest < Test::Unit::TestCase
   def test_truncate
     @db.put(nil, 'key', 'data', 0)
     result = @db.get(nil, 'key', nil, 0)
-    assert_equal 'data', result
+    assert_equal 'data', result[1]
     @db.truncate(nil)
     result = @db.get(nil, 'key', nil, 0)
     assert_nil result    

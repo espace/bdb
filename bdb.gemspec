@@ -2,14 +2,20 @@ BDB_SPEC = Gem::Specification.new do |s|
     s.platform  =   Gem::Platform::RUBY
     s.required_ruby_version = '>=1.8.4'
     s.name      =   "bdb"
-    s.version   =   "0.0.1"
-    s.authors   =  ["Matt Bauer", "Dan Janowski"]
-    s.email     =  "bauer@pedalbrain.com"
+    s.version   =   "0.0.2"
+    s.authors   =  ["Moustafa Emara", "Muhammed Ali", "Matt Bauer", "Dan Janowski"]
+    s.email     =  "moustafa.emara@espace.com.eg"
     s.summary   =   "A Ruby interface to BerkeleyDB"
     s.files     =   ['bdb.gemspec',
                      'ext/bdb.c',
                      'ext/bdb.h',
                      'ext/extconf.rb',
+                     'lib/berkeleydb.rb',
+                     'lib/btree.rb',
+                     'lib/hash_table.rb',
+                     'lib/queue.rb',
+                     'lib/btree_index.rb',
+                     'lib/model.rb',
                      'LICENSE',
                      'README.textile',
                      'Rakefile']
