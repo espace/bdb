@@ -4,7 +4,7 @@ require 'mkmf'
 inc, lib = dir_config('db')
 
 # OS X compatibility
-if(PLATFORM =~ /darwin/) then
+if(RUBY_PLATFORM =~ /darwin/) then
 	# test if Bdb is probably universal
 	
 	filetype = (IO.popen("file #{inc}/../db_dump").readline.chomp rescue nil)
@@ -51,7 +51,7 @@ def create_header
     f = File.join(e[2..-1], 'db.h')
     File.exists?(f) ? f : nil
   }.select { |e| e }.first
-  
+  db_header = "/usr/local/include/db.h"  
   n=0
   defines=[]
   File.open(db_header) {|fd|

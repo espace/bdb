@@ -5,7 +5,7 @@
  * 
  */
 
-#include <bdb.h>
+#include <bdb_c.h>
 #include <stdio.h>
 
 #define LMEMFLAG 0

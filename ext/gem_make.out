@@ -1,0 +1,47 @@
+/usr/local/bin/ruby extconf.rb
+checking for db_version() in -ldb-4.7... yes
+Not writing bdb_aux._c (defines), already exists
+creating Makefile
+
+make
+gcc -I. -I/usr/local/include/ruby-1.9.1/x86_64-linux -I/usr/local/include/ruby-1.9.1/ruby/backward -I/usr/local/include/ruby-1.9.1 -I.   -fPIC  -O2 -g -Wall -Wno-parentheses  -o bdb.o -c bdb.c
+bdb.c: In function ‘db_open’:
+bdb.c:242: warning: implicit declaration of function ‘raise’
+bdb.c:233: warning: unused variable ‘len’
+bdb.c: In function ‘db_close’:
+bdb.c:529: warning: format ‘%x’ expects type ‘unsigned int’, but argument 5 has type ‘struct t_dbh *’
+bdb.c:536: warning: format ‘%x’ expects type ‘unsigned int’, but argument 5 has type ‘VALUE’
+bdb.c: In function ‘db_get’:
+bdb.c:627: warning: unused variable ‘str’
+bdb.c: In function ‘db_pget’:
+bdb.c:695: warning: unused variable ‘str’
+bdb.c: In function ‘db_remove’:
+bdb.c:931: warning: unused variable ‘logical_db’
+bdb.c: In function ‘db_rename’:
+bdb.c:963: warning: unused variable ‘logical_db’
+bdb.c:962: warning: unused variable ‘disk_file’
+bdb.c: In function ‘db_truncate’:
+bdb.c:1019: warning: unused variable ‘result’
+bdb.c: In function ‘db_del’:
+bdb.c:1103: warning: unused variable ‘str’
+bdb.c: In function ‘assoc_callback’:
+bdb.c:1143: warning: unused variable ‘proc’
+bdb.c: In function ‘db_cursor’:
+bdb.c:1265: warning: unused variable ‘dbc’
+bdb.c: In function ‘env_open’:
+bdb.c:1586: error: expected ‘)’ before ‘;’ token
+bdb.c:1586: error: too few arguments to function ‘eh->env->open’
+bdb.c: In function ‘env_close’:
+bdb.c:1621: warning: format ‘%d’ expects type ‘int’, but argument 5 has type ‘long int’
+bdb.c:1625: warning: format ‘%x’ expects type ‘unsigned int’, but argument 5 has type ‘VALUE’
+bdb.c:1640: warning: format ‘%x’ expects type ‘unsigned int’, but argument 5 has type ‘struct t_envh *’
+bdb.c: In function ‘env_get_cachesize’:
+bdb.c:1721: warning: unused variable ‘ln’
+bdb.c: In function ‘db_stat’:
+bdb.c:2003: warning: enumeration value ‘DB_UNKNOWN’ not handled in switch
+bdb.c: In function ‘env_report_stderr’:
+bdb.c:2466: warning: unused variable ‘rv’
+bdb.c:2465: warning: unused variable ‘max’
+bdb.c: In function ‘txn_finish’:
+bdb.c:2654: warning: format ‘%x’ expects type ‘unsigned int’, but argument 5 has type ‘struct t_txnh *’
+make: *** [bdb.o] Error 1
